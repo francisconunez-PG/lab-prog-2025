@@ -31,6 +31,11 @@ header{
   	text-decoration: none;
   	padding: 10px 15px;
 }
+
+/* Nuevo: efecto hover */
+.navContenedor li a:hover {
+	background-color: lightgray;
+	
 /* FIN DEL SECCION DEL NAV */
 
 
@@ -73,10 +78,14 @@ header{
 
 .containerNosotros{
 	padding: 50px;
+	text-align: justify;
+  	text-indent: 20px;              
 } 
 
 .nosTitulo{
 	text-align: center;
+	text-transform: uppercase;
+  	color: red;
 }
 
 .imgNosotros{
@@ -87,4 +96,7 @@ header{
 .piePagina{
 	background-color: rgb(26, 25, 25);
 	height: 100px;
+	color: white;
+  	text-align: center;
+   
 }
