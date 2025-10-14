@@ -1,16 +1,135 @@
 
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
   const contenedor = document.querySelector(".listaProductos");
 
-  // Rutas a todos los archivos JSON
-  const archivosJSON = [
-    "data/productosPasta.json", 
-    "data/productosSandwich.json", 
-    "data/productosEspecialidad.json", 
-    "data/productosNuggets.json", 
-    "data/productosEnsalada.json" 
-  ];
+  // Usen asi por ahora
+  const datosProductos = {
+    productosPasta: [
+      {
+        "id": 1,
+        "nombre": "Pasta con Queso",
+        "descripcion": "Pasta italiana con salsa cremosa de queso parmesano.",
+        "imagen": "assets/comida/pasta/pastaQueso.jpeg"
+      },
+      {
+        "id": 2,
+        "nombre": "Pasta y Verduras",
+        "descripcion": "Tallarines salteados con vegetales frescos y aceite de oliva.",
+        "imagen": "assets/comida/pasta/pasta&verduras.jpg"
+      },
+      {
+        "id": 3,
+        "nombre": "Pasta con Albóndigas",
+        "descripcion": "Spaghetti clásico con albóndigas y salsa de tomate casera.",
+        "imagen": "assets/comida/pasta/pastaAlbondigas.jpeg"
+      },
+      {
+        "id": 4,
+        "nombre": "Fettuccine Alfredo",
+        "descripcion": "Fettuccine en salsa Alfredo cremosa con parmesano y manteca.",
+        "imagen": "assets/comida/pasta/fettuccineAlfredo.jpg"
+      },
+      {
+        "id": 5,
+        "nombre": "Ravioles de Ricotta y Espinaca",
+        "descripcion": "Ravioles artesanales servidos con salsa de tomate y albahaca.",
+        "imagen": "assets/comida/pasta/raviolesRicotta.jpg"
+      }
+    ],
+    productosSandwich: [
+      {
+        "id": 9,
+        "nombre": "Sandwich de Carne BBQ",
+        "descripcion": "Carne tierna a la barbacoa con cebolla caramelizada.",
+        "imagen": "assets/comida/sandwich/sandwichCarneBarbacoa.jpg"
+      },
+      {
+        "id": 10,
+        "nombre": "Sandwich de Pollo",
+        "descripcion": "Pechuga grillada con lechuga, tomate y mayonesa casera.",
+        "imagen": "assets/comida/sandwich/sandwichPollo.jpg"
+      },
+      {
+        "id": 11,
+        "nombre": "Sandwich de Pollo & Papas",
+        "descripcion": "Sandwich de pollo acompañado de papas fritas crocantes.",
+        "imagen": "assets/comida/sandwich/sandwichPolloPapas.jpg"
+      },
+      {
+        "id": 12,
+        "nombre": "Sandwich de Soja BBQ",
+        "descripcion": "Versión vegetariana con soja barbacoa y vegetales grillados.",
+        "imagen": "assets/comida/sandwich/sandwichSojaBarbacoa.jpeg"
+      }
+    ],
+    productosEspecialidad: [
+      {
+        "id": 6,
+        "nombre": "Hamburguesa 'Buen Morfar'",
+        "descripcion": "Carne premium, pan brioche y salsa casera especial.",
+        "imagen": "assets/comida/especialidad/hamburguesa.jpg"
+      },
+      {
+        "id": 7,
+        "nombre": "Pollo 'A la Morfar' & Papas Rústicas",
+        "descripcion": "Muslo grillado con condimentos secretos y papas rústicas.",
+        "imagen": "assets/comida/especialidad/polloPapas.jpg"
+      },
+      {
+        "id": 8,
+        "nombre": "Lomo a la Parrilla",
+        "descripcion": "Lomo tierno con chimichurri artesanal y guarnición a elección.",
+        "imagen": "assets/comida/especialidad/lomoParrilla.jpg"
+      }
+    ],
+    productosNuggets: [
+      {
+        "id": 13,
+        "nombre": "Nuggets de Pollo",
+        "descripcion": "Crujientes por fuera, tiernos por dentro, con salsa barbacoa.",
+        "imagen": "assets/comida/nuggets/nuggetsPollo.jpeg"
+      },
+      {
+        "id": 14,
+        "nombre": "Nuggets de Verdura",
+        "descripcion": "Deliciosos bocados de zanahoria, calabaza y arvejas.",
+        "imagen": "assets/comida/nuggets/nuggetsVerdura.jpeg"
+      },
+      {
+        "id": 15,
+        "nombre": "Nuggets de Queso",
+        "descripcion": "Nuggets rellenos de queso fundido, ideales como snack.",
+        "imagen": "assets/comida/nuggets/nuggetsQueso.jpg"
+      }
+    ],
+    productosEnsalada: [
+      {
+        "id": 16,
+        "nombre": "Ensalada Verde",
+        "descripcion": "Mix de hojas verdes, pepino y aderezo de limón.",
+        "imagen": "assets/comida/ensaladas/ensalada2.jpeg"
+      },
+      {
+        "id": 17,
+        "nombre": "Ensalada César",
+        "descripcion": "Clásica con pollo grillado, parmesano y crutones.",
+        "imagen": "assets/comida/ensaladas/ensaladaCesar.jpg"
+      },
+      {
+        "id": 18,
+        "nombre": "Ensalada Mediterránea",
+        "descripcion": "Con tomate, aceitunas, queso feta y aceite de oliva.",
+        "imagen": "assets/comida/ensaladas/ensaladaMediterranea.jpg"
+      },
+      {
+        "id": 19,
+        "nombre": "Ensalada de Champiñones",
+        "descripcion": "Champiñones frescos con espinaca y vinagreta balsámica.",
+        "imagen": "assets/comida/ensaladas/ensalada1.jpeg"
+      }
+    ]
+  };
 
   let platos = [];
   let indice = 0;
@@ -33,18 +152,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     return producto;
   }
 
-  // Cargar todos los archivos JSON y combinarlos
-  async function cargarTodosLosPlatos() {
+  // Cargar todos los datos embebidos
+  function cargarTodosLosPlatos() {
     try {
-      const respuestas = await Promise.all(archivosJSON.map(r => fetch(r)));
-      const datos = await Promise.all(respuestas.map(r => r.json()));
-
       // Unir todos los productos en un solo array
-      platos = datos.flatMap(d => Object.values(d)[0]);
+      platos = Object.values(datosProductos).flat();
 
       mostrarMasPlatos();
     } catch (error) {
-      console.error("Error al cargar los archivos JSON:", error);
+      console.error("Error al cargar los datos:", error);
     }
   }
 
@@ -69,5 +185,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   // Inicializar
-  await cargarTodosLosPlatos();
+  cargarTodosLosPlatos();
 });
