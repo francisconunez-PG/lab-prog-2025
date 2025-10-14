@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let platos = [];
   let indice = 0;
-  const cantidadPorCarga = 4; // cantidad de platos por tanda
+  const cantidadPorCarga = 2; // cantidad de platos por tanda
 
   // Crea el HTML de cada producto
   function crearProducto(plato) {
